@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -5,10 +7,23 @@
 }
 
 body {
-  background-color: #f9fafb;
-  font-family: "Open Sans", sans-serif;
+  background-color: #34495e;
+  color: white;
+  font-family: "Comfortaa", cursive;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+}
+
+.figure-container {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.figure-part {
+  display: none;
 }
