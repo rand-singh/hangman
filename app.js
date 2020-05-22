@@ -1,12 +1,12 @@
 const wordEl = document.getElementById("word"),
-  wrongLetterEl = document.getElementById("wrong-letters"),
-  playAgainBtn = document.getElementById("play-again"),
+  wrongLettersEl = document.getElementById("wrong-letters"),
+  playAgainBtn = document.getElementById("play-button"),
   popup = document.getElementById("popup-container"),
   notification = document.getElementById("notification-container"),
   finalMessage = document.getElementById("final-message"),
   figureParts = document.querySelectorAll(".figure-part"),
   words = ["apple", "monster", "spiderman", "popcorn"],
-  correctLetters = ["p", "l", "e"],
+  correctLetters = [],
   wrongLetters = [];
 
 let selectedWord = words[Math.floor(Math.random() * words.length)];
@@ -36,7 +36,27 @@ function displayWord() {
 
 // update the wrong letters array
 function updateWrongLettersEl() {
-  console.log("update wrong letters");
+  // display wrong letters
+  wrongLettersEl.innerHTML = `
+    ${wrongLetters.length > 0 ? "<p>Wrong</p>" : ""}
+    ${wrongLetters.map(letter => `<span>${letter}</span>`)}
+  `;
+
+  // display the body parts of figure
+  figureParts.forEach((part, index) => {
+    const errors = wrongLetters.length;
+    if (index < errors) {
+      part.style.display = "block";
+    } else {
+      part.style.display = "none";
+    }
+  });
+
+  // check if lost
+  if (wrongLetters.length === figureParts.length) {
+    finalMessage.innerText = "You lost :-(";
+    popup.style.display = "flex";
+  }
 }
 
 // show notification
@@ -68,6 +88,19 @@ window.addEventListener("keydown", e => {
       }
     }
   }
+});
+
+// restart game
+playAgainBtn.addEventListener("click", () => {
+  // clear arrays
+  correctLetters.splice(0);
+  wrongLetters.splice(0);
+  selectedWord = words[Math.floor(Math.random() * words.length)];
+
+  displayWord();
+  updateWrongLettersEl();
+
+  popup.style.display = "none";
 });
 
 displayWord();
